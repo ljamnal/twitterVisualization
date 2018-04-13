@@ -1,1 +1,0 @@
-src/com/uottawa/twittervisual/configuration/ApplicationInitializer.java:12:	Each class should declare at least one constructor
