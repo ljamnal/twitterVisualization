@@ -1,18 +1,23 @@
 package com.uottawa.twittervisual.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uottawa.twittervisual.business.DbServlet;
 import com.uottawa.twittervisual.model.DataPointsModel;
 import com.uottawa.twittervisual.model.Timeline;
 
@@ -310,4 +315,25 @@ public class MainController {
 		return "index";
 	}
 
+	
+	
+	@RequestMapping(value = "/topClubs")
+	public @ResponseBody ModelAndView topClubs() {
+
+		
+		return new ModelAndView("top","message","done");
+	}
+	
+	@RequestMapping(value = "/dbGeo", method = RequestMethod.GET)
+	public @ResponseBody ModelAndView dbGeoMap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		DbServlet dbGeo = new DbServlet();
+		dbGeo.geoMap(request, response);
+		
+		return new ModelAndView("dbSuccess","message","done");
+	}
+	
+	
+	
+	
 }
