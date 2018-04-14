@@ -2,16 +2,12 @@ package com.uottawa.twittervisual.business;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -21,14 +17,14 @@ import com.mongodb.MongoCredential;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
-
-@WebServlet("/dbServlet")
-public class DbServlet extends HttpServlet {
+@Component
+public class DbGeoMap{
 	private static final long serialVersionUID = 1L;
 
 	
-	public void geoMap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void geoMap() throws ServletException, IOException {
 		
 		
 		// Creating a Mongo client 
@@ -119,12 +115,7 @@ public class DbServlet extends HttpServlet {
 
           System.out.println("JSON Object Successfully written to the file!!");
 
-	      PrintWriter out = response.getWriter(  ); 
-	      response.setContentType("text/html"); 
-	      out.println("Connection successful");
-		
-		
-		
+	      
 	}
 
 }

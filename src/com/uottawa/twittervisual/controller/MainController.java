@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.uottawa.twittervisual.business.DbServlet;
+import com.uottawa.twittervisual.business.DbGeoMap;
 import com.uottawa.twittervisual.model.DataPointsModel;
 import com.uottawa.twittervisual.model.Timeline;
 
@@ -327,8 +327,8 @@ public class MainController {
 	@RequestMapping(value = "/dbGeo", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView dbGeoMap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		DbServlet dbGeo = new DbServlet();
-		dbGeo.geoMap(request, response);
+		DbGeoMap dbGeo = new DbGeoMap();
+		dbGeo.geoMap();
 		
 		return new ModelAndView("dbSuccess","message","done");
 	}
