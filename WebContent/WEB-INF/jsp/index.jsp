@@ -187,10 +187,7 @@ div.desc {
                 <div class="page-header float-left">
                     <div class="page-title">
                         <h1>Champions League Dashboard</h1>
-                         <form action="<c:url value="dbGeo.html"/>" method="get">
-                          <input type="submit" name="submit" value="DB connection">
-                          
-                         </form>
+                         
                     </div>
                 </div>
             </div>
@@ -363,7 +360,7 @@ function openCity(cityName) {
 anychart.onDocumentReady(function() {
   // The data used in this sample can be obtained from the CDN
   // https://cdn.anychart.com/samples/maps-general-features/world-choropleth-map/data.json
-  anychart.data.loadJsonFile('resources/data/mapData.json', function(data) {
+  anychart.data.loadJsonFile('resources/data/data.json', function(data) {
     var map = anychart.map();
 
     map.credits()
@@ -402,11 +399,11 @@ anychart.onDocumentReady(function() {
     series.tooltip()
       .useHtml(true)
       .format(function() {
-        return '<span style="color: #d9d9d9">Positive</span>: ' +
+        return '<span style="color: #d9d9d9">Negative</span>: ' +
           parseFloat(this.value).toLocaleString() + ' tweets <br/>' +
-          '<span style="color: #d9d9d9">Negative</span>: ' +
-          parseInt(this.getData('population')).toLocaleString() + 'tweets <br/>' +
           '<span style="color: #d9d9d9">Neutral</span>: ' +
+          parseInt(this.getData('population')).toLocaleString() + 'tweets <br/>' +
+          '<span style="color: #d9d9d9">Positive</span>: ' +
           parseInt(this.getData('area')).toLocaleString() + ' tweets';
       });
 
