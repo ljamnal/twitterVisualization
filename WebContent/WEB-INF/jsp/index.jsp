@@ -232,105 +232,58 @@ function openCity(cityName) {
 
 <div id="quarter" class="w3-container w3-display-container city">
 
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match1</div>
-</div>
+                <c:forEach var="fixture" items="${quarters}">
+                  <div class="gallery">
+                    <a href=
+                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      <img
+                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      height="600" width="600" />
+                    </a>
+                    <div class="desc">${fixture.teams}</div>
+                    <div class="desc">${fixture.matchTime}</div>
+                    <div class="desc">${fixture.stadium}</div>
+                  </div>
+                </c:forEach>
 
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/england_2014_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match2</div>
-</div>
+              </div>
 
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/england_2015_winner.png"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match3</div>
-</div>
+              <div id="semi" class="w3-container w3-display-container city"
+                style="display: none">
 
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/england_2016_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match4</div>
-</div>
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/spain_2012_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match5</div>
-</div>
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/spain_2014_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match6</div>
-</div>
-
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/england_2012_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match7</div>
-</div>
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/france_2013_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match8</div>
-</div>
-
-</div>
+                <c:forEach var="fixture" items="${semis}">
+                  <div class="gallery">
+                    <a href=
+                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      <img
+                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      height="600" width="600" />
+                    </a>
+                    <div class="desc">${fixture.teams}</div>
+                    <div class="desc">${fixture.matchTime}</div>
+                    <div class="desc">${fixture.stadium}</div>
+                  </div>
+                </c:forEach>
+              </div>
 
 
 
-<div id="semi" class="w3-container w3-display-container city" style="display:none">
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/france_2014_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match9</div>
-</div>
-
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/france_2015_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match10</div>
-</div>
-</div>
-
-
-
-<div id="final" class="w3-container w3-display-container city" style="display:none">
-<div class="gallery">
-  <a target="_blank" href="fjords.jpg">
-  <img src="<c:url value="/resources/img/team/germany_2012_winner.jpg"/>"
-							height="300" width="200" />
-  </a>
-  <div class="desc">Match11</div>
-</div>
-</div>
+              <div id="final" class="w3-container w3-display-container city"
+                style="display: none">
+                <c:forEach var="fixture" items="${finals}">
+                  <div class="gallery">
+                    <a
+                      href="fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      <img
+                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      height="600" width="600" />
+                    </a>
+                    <div class="desc">${fixture.teams}</div>
+                    <div class="desc">${fixture.matchTime}</div>
+                    <div class="desc">${fixture.stadium}</div>
+                  </div>
+                </c:forEach>
+              </div>
 
 </div></div></div></div>
 </div>
