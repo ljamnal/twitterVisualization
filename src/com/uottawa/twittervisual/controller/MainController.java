@@ -1,29 +1,42 @@
 package com.uottawa.twittervisual.controller;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uottawa.twittervisual.business.CLFixture;
 import com.uottawa.twittervisual.business.DbGeoMap;
+import com.uottawa.twittervisual.business.LiveMatch;
 import com.uottawa.twittervisual.model.DataPointsModel;
-import com.uottawa.twittervisual.model.Timeline;
+import com.uottawa.twittervisual.model.FixtureDetail;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
+	
+	@Autowired
+	CLFixture clFixture;
+	
+	@Autowired
+	LiveMatch liveMatch;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(ModelMap model, HttpServletRequest request) throws ServletException, IOException {
