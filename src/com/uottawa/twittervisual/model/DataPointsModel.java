@@ -10,12 +10,12 @@ public class DataPointsModel implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@JsonProperty("x")
-	int x;
+	float x;
 	
 	@JsonProperty("y")
 	int y;
 	
-	public void setX(int x){
+	public void setX(float x){
 		this.x=x;
 	}
 	
