@@ -14,7 +14,7 @@ import javax.servlet.ServletException;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase; 
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.MongoClient; 
 import com.mongodb.MongoCredential;
 import org.bson.Document;
@@ -59,6 +59,13 @@ public class DbGeoMap{
 	      //Geographical map
 	      JSONArray jsonArray = new JSONArray();
 	      JSONObject jsonObject = null;
+	      
+	      
+//	      JSONArray jsonArray2 = new JSONArray();
+//	      JSONArray jsonArraySentiment = new JSONArray();
+//	      JSONObject jsonObject2 = null;
+//	      JSONObject jsonObject3 = null;
+//	      JSONObject jsonObject4 = null;
 	      
 	      List<Document> employees = (List<Document>) collection.find().into(
 					new ArrayList<Document>());
@@ -121,6 +128,8 @@ public class DbGeoMap{
 	    	  }
 					
 	    	  }
+
+	    	  
 	      }
 	      
 	      for( Map.Entry<String, int[]> country:countrySentiment.entrySet())
@@ -166,12 +175,143 @@ public class DbGeoMap{
           fileWriter.close();
           System.out.println("JSON Object Successfully written to the file!!");
 
+          
+          //checking nested JSON
+//          for( Map.Entry<String, int[]> country:countrySentiment.entrySet())
+//	      {
+//	    	  int savedSentiment[] = new int[3];
+//    		  savedSentiment = countrySentiment.get(country.getKey());
+//    		  
+//    		  jsonObject2 = new JSONObject();
+//    		  jsonObject3 = new JSONObject();
+//    		  String countryCode= country.getKey();
+//    		  String [] values = countryCode.split("_");
+//    		  
+//    		  jsonObject2.put("name", values[0]);
+//    		  
+//    		  JSONObject json5 = new JSONObject();
+//    		  json5.put("name", "positive");
+//    		  json5.put("size", savedSentiment[0]);
+//    
+//    		  //jsonArraySentiment.put(json5);
+//
+//	          jsonObject2.put("Children", json5);
+//	          
+//	          jsonArray2.put(jsonObject2);
+//	      }    
+//	      
+//          FileWriter fileWriter2 = new FileWriter("C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\Flare_data.json");
+//          // Writting the jsonObject into sample.json
+//          fileWriter2.write(jsonArray2.toString());
+//          fileWriter2.close();
+//          System.out.println("JSON Object Successfully written to the file!!");
+//          System.out.println("new json is:"+jsonArray2);
+          
+          
 	      
 	}
 	
-	public void trendingTweets() {
-		
-		
-		
+	
+	
+	public void TeamTweetCount() throws ServletException, IOException {
+
+//		System.out.println("Graph 2 started");
+//	      MongoClient mongo = new MongoClient( "localhost" , 27017 ); 
+//	      MongoCredential credential; 
+//	      credential = MongoCredential.createCredential("sampleUser", "local", 
+//	         "password".toCharArray()); 
+//	      System.out.println("Checking connection");  
+//
+//	      MongoDatabase database = mongo.getDatabase("cdpTweets"); 
+//	      MongoCollection<Document> collection = database.getCollection("tweets-2018-4-18"); 
+//	      MongoCollection<Document> collection2 = database.getCollection("teams"); 
+//	      System.out.println("Collection MyDB selected successfully");
+//
+//	      //Geographical map
+//	      JSONArray jsonArray = new JSONArray();
+//	      JSONObject jsonObject = null;
+//	      Map<String, int[]> countrySentiment = new HashMap<String, int[]>();
+//	      
+//	      List<Document> tweets = (List<Document>) collection.find().into(
+//					new ArrayList<Document>());
+//	      
+//	      int i=0;
+//	      int n=1;
+//	      int positive = 0, negative=0, neutral=0;
+//	      
+//
+//	      for(Document emp : tweets)
+//	      {
+//	    	  i++;
+//	    	  
+//	    	  String teamId = (String) emp.get("teamId");	 
+//	    	  
+//	    	  //sentiment
+//	    	  String sentiment = emp.getString("mySentiment");
+//	    	  
+//	    	  if(teamId!=null)
+//	    	  {
+//					System.out.println("teamId = " + teamId);
+//	    	  
+//	    	  if(countrySentiment.containsKey(teamId))
+//	    	  {
+//	    		  int savedSentiment[] = new int[3];
+//	    		  savedSentiment = countrySentiment.get(teamId);
+//    		    
+//					if(sentiment.equalsIgnoreCase("positive"))
+//						savedSentiment[0]=savedSentiment[0]+1;
+//					if(sentiment.equalsIgnoreCase("negative"))
+//						savedSentiment[1]=savedSentiment[1]+1;
+//					if(sentiment.equalsIgnoreCase("neutral"))
+//						savedSentiment[2]=savedSentiment[2]+1;
+//					
+//					 countrySentiment.put(teamId.toString(), savedSentiment);	
+// 
+//	    	  }
+//	    	  
+//	    	  else {
+//	    		  int totalSentiments[]= {0,0,0};
+//	    		        		       		    
+//	    			if(sentiment.equalsIgnoreCase("positive"))
+//	    				totalSentiments[0]=1;
+//					if(sentiment.equalsIgnoreCase("negative"))
+//						totalSentiments[1]=1;
+//					if(sentiment.equalsIgnoreCase("neutral"))
+//						totalSentiments[2]=1;
+//					
+//	    		  countrySentiment.put(teamId.toString(), totalSentiments);	    		  
+//	    	  }
+//					
+//	    	  
+//	    	  }
+//	    	  
+//	      }
+//	      
+//
+//	      for( Map.Entry<String, int[]> country:countrySentiment.entrySet())
+//	      {
+//	    	  int savedSentiment[] = new int[3];
+//    		  savedSentiment = countrySentiment.get(country.getKey());
+//    		  
+//    		  System.out.println("Key:"+country.getKey()+"Value:"+savedSentiment);
+//    		  
+//    		  
+//    		  jsonObject = new JSONObject();
+//    		  String teamId= country.getKey();
+//    		  
+//		      jsonObject.put("teamId", teamId);
+//		      //positive
+//	    	  jsonObject.put("positive", savedSentiment[0]);
+//	    	  //negative
+//	          jsonObject.put("negative", savedSentiment[1]);
+//	          //neutral
+//	          jsonObject.put("neutral", savedSentiment[2]);
+//	          
+//	          jsonArray.put(jsonObject);
+//	      }    
+//	      
+//         System.out.println(jsonArray);
+
 	}
 }
+

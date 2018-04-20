@@ -59,7 +59,7 @@ public class MainController {
 
 		DbGeoMap dbGeo = new DbGeoMap();
 		dbGeo.geoMap();
-		
+		dbGeo.TeamTweetCount();
 		
 		return "index";
 	}

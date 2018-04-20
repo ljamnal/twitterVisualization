@@ -1,0 +1,70 @@
+{
+ "name": "flare",
+ "children": [
+  {
+   "name": "barcelona",
+     "children": [
+      {"name": "positive", "size": 452},
+      {"name": "neutral", "size": 248},
+      {"name": "negative", "size": 695}
+     ]
+    },
+    {
+     "name": "real_madrid",
+     "children": [
+    	 {"name": "positive", "size": 284},
+         {"name": "neutral", "size": 100},
+         {"name": "negative", "size": 698}
+     ]
+    },
+    {
+        "name": "Sevilla",
+        "children": [
+       	 {"name": "positive", "size": 785},
+            {"name": "neutral", "size": 452},
+            {"name": "negative", "size": 111}
+        ]
+       },
+    {
+        "name": "Juventus",
+        "children": [
+       	 {"name": "positive", "size": 628},
+            {"name": "neutral", "size": 50},
+            {"name": "negative", "size": 169}
+        ]
+       },
+    {
+        "name": "Manchester City",
+        "children": [
+       	 {"name": "positive", "size": 784},
+            {"name": "neutral", "size": 222},
+            {"name": "negative", "size": 193}
+        ]
+       },
+    {
+        "name": "Liverpool",
+        "children": [
+       	 {"name": "positive", "size": 486},
+            {"name": "neutral", "size": 935},
+            {"name": "negative", "size": 715}
+        ]
+       },
+       {
+           "name": "Roma",
+           "children": [
+          	 {"name": "positive", "size": 152},
+               {"name": "neutral", "size": 496},
+               {"name": "negative", "size": 785}
+           ]
+          },
+          {
+              "name": "Bayern",
+              "children": [
+             	 {"name": "positive", "size": 285},
+                  {"name": "neutral", "size": 352},
+                  {"name": "negative", "size": 412}
+              ]
+             }
+    
+   ]
+  }
