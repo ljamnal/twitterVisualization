@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uottawa.twittervisual.business.CLFixture;
 import com.uottawa.twittervisual.business.DbGeoMap;
 import com.uottawa.twittervisual.business.LiveMatch;
+import com.uottawa.twittervisual.business.MatchGeo;
 import com.uottawa.twittervisual.model.DataPointsModel;
 import com.uottawa.twittervisual.model.FixtureDetail;
 
@@ -79,10 +80,15 @@ public class MainController {
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = "application/json")
 	public String fetchDetails(@RequestParam("matchId") int matchId, @RequestParam("homeTeamId") int homeTeamId,
-			@RequestParam("awayTeamId") int awayTeamId, ModelMap model) throws JsonProcessingException {
+			@RequestParam("awayTeamId") int awayTeamId, ModelMap model) throws ServletException, IOException {
 
 		liveMatch.getMatchDetails(matchId, homeTeamId, awayTeamId);
 
+		//data based on matchId for geo chart
+		MatchGeo geoMatch = new MatchGeo();
+		geoMatch.geoMatchData(matchId);
+		model.put("matchId", matchId);
+		
 		String fileName = "E:\\test\\Match" + matchId + ".csv";
 		BufferedReader br = null;
 		String line = "";
