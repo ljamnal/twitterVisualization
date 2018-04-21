@@ -191,7 +191,7 @@ function openCity(cityName) {
                 <c:forEach var="fixture" items="${quarters}">
                   <div class="gallery">
                     <a href=
-                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
                       src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
                       height="600" width="600" />
@@ -210,7 +210,7 @@ function openCity(cityName) {
                 <c:forEach var="fixture" items="${semis}">
                   <div class="gallery">
                     <a href=
-                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
                       src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
                       height="600" width="600" />
@@ -229,7 +229,7 @@ function openCity(cityName) {
                 <c:forEach var="fixture" items="${finals}">
                   <div class="gallery">
                     <a
-                      href="fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}">
+                      href="fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
                       src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
                       height="600" width="600" />

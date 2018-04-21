@@ -13,6 +13,10 @@ public class FixtureDetail {
 	int homeTeamId;
 
 	int awayTeamId;
+	
+	String homeTeamName;
+	
+	String awayTeamName;
 
 	public int getMatchId() {
 		return matchId;
@@ -61,4 +65,21 @@ public class FixtureDetail {
 	public void setMatchTime(String matchTime) {
 		this.matchTime = matchTime;
 	}
+
+	public String getHomeTeamName() {
+		return homeTeamName;
+	}
+
+	public void setHomeTeamName(String homeTeamName) {
+		this.homeTeamName = homeTeamName;
+	}
+
+	public String getAwayTeamName() {
+		return awayTeamName;
+	}
+
+	public void setAwayTeamName(String awayTeamName) {
+		this.awayTeamName = awayTeamName;
+	}
+	
 }

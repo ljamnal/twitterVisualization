@@ -122,14 +122,44 @@ div.desc {
 			}
 
 			var chart = new CanvasJS.Chart("chartContainer", {
-				title : {
-					text : "Live Chart"
+				
+				interactivityEnabled: true,  //try changing it to true
+				axisX: {
+					title: "Time in minutes (chart updates every 30 secs)"
+				},
+				axisY:{
+					title: "Sentiment",
+					gridThickness : 0,
+					maximum : 1,
+					interval : 1,
+					minimum : -1
+				},
+				legend: {
+					cursor:"pointer",
+					verticalAlign: "top",
+					fontSize: 22,
+					fontColor: "dimGrey",
+					itemclick: function (e) {
+		                //console.log("legend click: " + e.dataPointIndex);
+		                //console.log(e);
+		                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		                    e.dataSeries.visible = false;
+		                } else {
+		                    e.dataSeries.visible = true;
+		                }
+		 
+		                e.chart.render();
+		            }
 				},
 				data : [ {
 					type : "line",
+					name : '${homeTeam}',
+					showInLegend: true,
 					dataPoints : dps
 				}, {
 					type : "line",
+					name : '${awayTeam}',
+					showInLegend: true,
 					dataPoints : dps2
 				} ]
 			});
@@ -138,7 +168,7 @@ div.desc {
 			var xVal = a2 + 0.5;
 			var yVal = 15;
 			var yVal2 = 15;
-			var updateInterval = 5000;
+			var updateInterval = 30000;
 
 			var updateChart = function() {
 
@@ -147,9 +177,10 @@ div.desc {
 					contentType : 'application/json',
 					data : {
 						time : xVal,
-						matchId : 3,
-						homeTeamId : 5,
-						awayTeamId : 4
+						matchId : ${matchId},
+						homeTeamId : ${homeTeamId},
+						awayTeamId : ${awayTeamId},
+						normalize : ${normalize}
 					},
 					success : function(data) {
 
@@ -270,7 +301,7 @@ div.desc {
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-header">
-								<h4>World</h4>
+								<h4>${homeTeam}vs${awayTeam}</h4>
 							</div>
 							<div class="Vect">
 								<div id="chartContainer"></div>

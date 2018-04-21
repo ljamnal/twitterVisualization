@@ -64,13 +64,13 @@ public class MainController {
 	
 	@RequestMapping(value = "/liveData", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String liveDataRealTime(@RequestParam("time") float time, @RequestParam("matchId") int matchId,
-			@RequestParam("homeTeamId") int homeTeamId, @RequestParam("awayTeamId") int awayTeamId, ModelMap model)
-			throws JsonProcessingException {
+			@RequestParam("homeTeamId") int homeTeamId, @RequestParam("awayTeamId") int awayTeamId,
+			@RequestParam("normalize") float normalize, ModelMap model) throws JsonProcessingException {
 
 		String json = "";
 		if (time <= 100) {
 
-			DataPointsModel m = liveMatch.getRealTimeMatchDetails(matchId, homeTeamId, awayTeamId, time);
+			DataPointsModel m = liveMatch.getRealTimeMatchDetails(matchId, homeTeamId, awayTeamId, time, normalize);
 
 			ObjectMapper mapper = new ObjectMapper();
 			json = mapper.writeValueAsString(m);
@@ -80,14 +80,15 @@ public class MainController {
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = "application/json")
 	public String fetchDetails(@RequestParam("matchId") int matchId, @RequestParam("homeTeamId") int homeTeamId,
-			@RequestParam("awayTeamId") int awayTeamId, ModelMap model) throws ServletException, IOException {
+			@RequestParam("awayTeamId") int awayTeamId, @RequestParam("homeTeam") String homeTeamName,
+			@RequestParam("awayTeam") String awayTeamName, ModelMap model) throws JsonProcessingException {
 
-		liveMatch.getMatchDetails(matchId, homeTeamId, awayTeamId);
+		int max = liveMatch.getMatchDetails(matchId, homeTeamId, awayTeamId);
+		float normalize = ((float)max) * 1.2f;
 
 		//data based on matchId for geo chart
 		MatchGeo geoMatch = new MatchGeo();
 		geoMatch.geoMatchData(matchId);
-		model.put("matchId", matchId);
 		
 		String fileName = "E:\\test\\Match" + matchId + ".csv";
 		BufferedReader br = null;
@@ -109,16 +110,18 @@ public class MainController {
 				float time = Float.parseFloat(country[0]);
 
 				int team1 = Integer.parseInt(country[1]);
-				team1 = team1 - 2 * team1;
+				// team1 = team1 - 2 * team1;
 
 				int team2 = Integer.parseInt(country[2]);
-				team2 = team2 - 2 * team2;
+				// team2 = team2 - 2 * team2;
 
+				float y1 = ((float) team1)/normalize;
+				float y2 = ((float) team2)/normalize;
 				d1.setX(time);
-				d1.setY(team1);
+				d1.setY(y1);
 
 				d2.setX(time);
-				d2.setY(team2);
+				d2.setY(y2);
 
 				dps1.add(d1);
 				dps2.add(d2);
@@ -147,6 +150,12 @@ public class MainController {
 
 		model.put("json1", json1);
 		model.put("json2", json2);
+		model.put("matchId", matchId);
+		model.put("homeTeamId", homeTeamId);
+		model.put("awayTeamId", awayTeamId);
+		model.put("homeTeam", homeTeamName);
+		model.put("awayTeam", awayTeamName);
+		model.put("normalize", normalize);
 
 		return "LiveChart";
 	}

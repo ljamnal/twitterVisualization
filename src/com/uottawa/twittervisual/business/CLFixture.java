@@ -1,5 +1,7 @@
 package com.uottawa.twittervisual.business;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +25,7 @@ public class CLFixture {
 		List<FixtureDetail> quarterFinal = new ArrayList<>();
 		List<FixtureDetail> semiFinal = new ArrayList<>();
 		List<FixtureDetail> finals = new ArrayList<>();
-		
+
 		MongoClient mongo = new MongoClient("localhost", 27017);
 		MongoDatabase database = mongo.getDatabase("cdpTweets");
 
@@ -39,7 +41,25 @@ public class CLFixture {
 			int matchId = emp.getInteger("matchId");
 			int homeTeamId = emp.getInteger("homeTeamId");
 			int awayTeamId = emp.getInteger("awayTeamId");
+
+			MongoCollection<Document> collection2 = database.getCollection("teams");
+			List<Document> teams = (List<Document>) collection2.find(eq("teamId", homeTeamId))
+					.into(new ArrayList<Document>());
+			String homeTeamName = null;
+			String awayTeamName = null;
+			for(Document team : teams) {
+				homeTeamName = team.getString("teamName");
+				break;
+			}
 			
+			MongoCollection<Document> collection3 = database.getCollection("teams");
+			List<Document> teams2 = (List<Document>) collection3.find(eq("teamId", awayTeamId))
+					.into(new ArrayList<Document>());
+			
+			for(Document team : teams2) {
+				awayTeamName = team.getString("teamName");
+				break;
+			}
 			
 			FixtureDetail fd = new FixtureDetail();
 			fd.setAwayTeamId(awayTeamId);
@@ -48,20 +68,22 @@ public class CLFixture {
 			fd.setMatchTime(time);
 			fd.setStadium(stadium);
 			fd.setTeams(fixture);
-			
-			if("quarterfinal".equals(round)) {
+			fd.setHomeTeamName(homeTeamName);
+			fd.setAwayTeamName(awayTeamName);
+
+			if ("quarterfinal".equals(round)) {
 				quarterFinal.add(fd);
-			} else if("semifinal".equals(round)) {
+			} else if ("semifinal".equals(round)) {
 				semiFinal.add(fd);
-			} else if("final".equals(round)) {
+			} else if ("final".equals(round)) {
 				finals.add(fd);
 			}
 		}
-		
+
 		fixtureList.put("semifinal", semiFinal);
 		fixtureList.put("quarterfinal", quarterFinal);
 		fixtureList.put("final", finals);
-		
+
 		mongo.close();
 		return fixtureList;
 	}
