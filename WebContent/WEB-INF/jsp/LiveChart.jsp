@@ -301,7 +301,7 @@ div.desc {
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-header">
-								<h4>${homeTeam}vs${awayTeam}</h4>
+								<h4>${homeTeam}&nbsp;&nbsp;vs&nbsp;&nbsp;${awayTeam}</h4>
 							</div>
 							<div class="Vect">
 								<div id="chartContainer"></div>
