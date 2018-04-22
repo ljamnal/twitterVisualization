@@ -47,7 +47,7 @@ public class DbGeoMap {
 		// System.out.println("Collection created successfully");
 
 		// Retieving a collection
-		MongoCollection<Document> collection = database.getCollection("tweets-2018-4-18");
+		MongoCollection<Document> collection = database.getCollection("tweets");
 		System.out.println("Collection MyDB selected successfully");
 
 		// Getting the iterable object
@@ -64,8 +64,10 @@ public class DbGeoMap {
 		// JSONObject jsonObject3 = null;
 		// JSONObject jsonObject4 = null;
 
-		List<Document> employees = (List<Document>) collection.find().into(new ArrayList<Document>());
-
+		
+		
+		List<Document> employees = (List<Document>) collection.find(ne("place", null)).into(new ArrayList<Document>());
+		
 		int i = 0;
 		int x = 0;
 		int n = 1;
@@ -130,16 +132,20 @@ public class DbGeoMap {
 			String countryCode = country.getKey();
 			String[] values = countryCode.split("_");
 
-			jsonObject.put("name", values[0]);
-			jsonObject.put("id", values[1]);
-			// positive
-			jsonObject.put("area", savedSentiment[0]);
-			// negative
-			jsonObject.put("density", savedSentiment[1]);
-			// neutral
-			jsonObject.put("population", savedSentiment[2]);
+			if (values.length != 0) {
+				jsonObject.put("name", values[0]);
 
-			jsonArray.put(jsonObject);
+				jsonObject.put("id", values[1]);
+				// positive
+				jsonObject.put("area", savedSentiment[0]);
+				// negative
+				jsonObject.put("density", savedSentiment[1]);
+				// neutral
+				jsonObject.put("population", savedSentiment[2]);
+
+				jsonArray.put(jsonObject);
+			}
+
 		}
 
 		System.out.println(jsonArray);
