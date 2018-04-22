@@ -349,7 +349,7 @@ div.desc {
 anychart.onDocumentReady(function() {
   // The data used in this sample can be obtained from the CDN
   // https://cdn.anychart.com/samples/maps-general-features/world-choropleth-map/data.json
-  anychart.data.loadJsonFile('resources/data/Geodata_${matchId}.json', function(data) {
+  anychart.data.loadJsonFile('resources/data/UpdatedGeodata_${matchId}.json', function(data) {
     var map = anychart.map();
 
     map.credits()
@@ -371,7 +371,7 @@ anychart.onDocumentReady(function() {
 
     var dataSet = anychart.data.set(data);
     var density_data = dataSet.mapAs({
-      'value': 'density'
+      'value': 'color'
     });
     var series = map.choropleth(density_data);
 
@@ -388,50 +388,34 @@ anychart.onDocumentReady(function() {
     series.tooltip()
       .useHtml(true)
       .format(function() {
-        return '<span style="color: #d9d9d9">Negative</span>: ' +
-          parseFloat(this.value).toLocaleString() + ' tweets <br/>' +
-          '<span style="color: #d9d9d9">Neutral</span>: ' +
-          parseInt(this.getData('population')).toLocaleString() + 'tweets <br/>' +
+        return '<span style="color: #d9d9d9">Color</span>: ' +
+          parseFloat(this.value).toLocaleString() + ' tweets <br/><br>' +
+          '<span style="color: #d9d9d9"><b>Home Team</b></span>: ' +
+          parseInt(this.getData('homeTotalCount')).toLocaleString() + ' tweets <br/>' +
           '<span style="color: #d9d9d9">Positive</span>: ' +
-          parseInt(this.getData('area')).toLocaleString() + ' tweets';
+          parseInt(this.getData('homePositiveCount')).toLocaleString() +
+          '<span style="color: #d9d9d9">, Negative</span>: ' +
+          parseInt(this.getData('homeNegativeCount')).toLocaleString()+
+          '<span style="color: #d9d9d9">, Neutral</span>: ' +
+          parseInt(this.getData('homeNeutralCount')).toLocaleString()+ ' <br><br>'+
+          '<span style="color: #d9d9d9"><b>Away Team</b></span>: ' +
+          parseInt(this.getData('awayTotalCount')).toLocaleString() + ' tweets <br/>'+
+          '<span style="color: #d9d9d9">Positive</span>: ' +
+          parseInt(this.getData('awayPositiveCount')).toLocaleString()+
+          '<span style="color: #d9d9d9">, Negative</span>: ' +
+          parseInt(this.getData('awayNegativeCount')).toLocaleString()+
+          '<span style="color: #d9d9d9">, Neutral</span>: ' +
+          parseInt(this.getData('awayNeutralCount')).toLocaleString();
       });
 
     var scale = anychart.scales.ordinalColor([{
-        less: 10
+        less: 0.5
       },
       {
-        from: 10,
-        to: 30
-      },
-      {
-        from: 30,
-        to: 50
-      },
-      {
-        from: 50,
-        to: 100
-      },
-      {
-        from: 100,
-        to: 200
-      },
-      {
-        from: 200,
-        to: 300
-      },
-      {
-        from: 300,
-        to: 500
-      },
-      {
-        from: 500,
-        to: 1000
-      },
-      {
-        greater: 1000
+        greater: 0.5
       }
     ]);
-    scale.colors(['#81d4fa', '#4fc3f7', '#29b6f6', '#039be5', '#0288d1', '#0277bd', '#01579b', '#014377', '#000000']);
+    scale.colors(['#81d4fa', '#000000']);
 
     var colorRange = map.colorRange();
     colorRange.enabled(true)
@@ -452,9 +436,9 @@ anychart.onDocumentReady(function() {
         if (isFinite(range.start + range.end)) {
           name = range.start + ' - ' + range.end;
         } else if (isFinite(range.start)) {
-          name = 'More than ' + range.start;
+        	 name = 'Away Team ';
         } else {
-          name = 'Less than ' + range.end;
+          name = 'Home team ';
         }
         return name
       });

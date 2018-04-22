@@ -81,14 +81,14 @@ public class MainController {
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET, produces = "application/json")
 	public String fetchDetails(@RequestParam("matchId") int matchId, @RequestParam("homeTeamId") int homeTeamId,
 			@RequestParam("awayTeamId") int awayTeamId, @RequestParam("homeTeam") String homeTeamName,
-			@RequestParam("awayTeam") String awayTeamName, ModelMap model) throws JsonProcessingException {
+			@RequestParam("awayTeam") String awayTeamName, ModelMap model) throws ServletException, IOException {
 
 		int max = liveMatch.getMatchDetails(matchId, homeTeamId, awayTeamId);
 		float normalize = ((float)max) * 1.2f;
 
 		//data based on matchId for geo chart
 		MatchGeo geoMatch = new MatchGeo();
-		geoMatch.geoMatchData(matchId);
+		geoMatch.getMatchWiseTweetDetails(matchId, homeTeamId, awayTeamId, homeTeamName, awayTeamName);
 		
 		String fileName = "E:\\test\\Match" + matchId + ".csv";
 		BufferedReader br = null;

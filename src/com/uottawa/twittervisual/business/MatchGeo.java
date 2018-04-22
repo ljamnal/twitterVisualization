@@ -3,6 +3,8 @@ package com.uottawa.twittervisual.business;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,103 +31,182 @@ import org.springframework.stereotype.Component;
 public class MatchGeo {
 	private static final long serialVersionUID = 1L;
 
-	public void geoMatchData(int matchId) throws ServletException, IOException {
+	
 
-		String matchIdString = Integer.toString(matchId);
-		System.out.println("Match id is:"+matchIdString);
-		MongoClient mongo = new MongoClient("localhost", 27017);
-		MongoCredential credential;
-		credential = MongoCredential.createCredential("sampleUser", "local", "password".toCharArray());
-		System.out.println("Checking connection");
-		MongoDatabase database = mongo.getDatabase("cdpTweets");
-		MongoCollection<Document> collection = database.getCollection("tweets-2018-4-18");
-		System.out.println("Collection MyDB selected successfully");
-		JSONArray jsonArray = new JSONArray();
+	public void getMatchWiseTweetDetails(int matchId, int homeTeamId, int awayTeamId, String homeTeamName,
+			String awayTeamName) throws IOException {
+
 		JSONObject jsonObject = null;
-		List<Document> employees = (List<Document>) collection.find(eq("matchId", matchIdString)).into(new ArrayList<Document>());
+		JSONArray jsonArray = new JSONArray();
+		MongoClient mongo = new MongoClient("localhost", 27017);
+		MongoDatabase database = mongo.getDatabase("cdpTweets");
 
-		int i = 0;
-		int x = 0;
-		int n = 1;
-		int positive = 0, negative = 0, neutral = 0;
+		// Retrieving a collection
+		MongoCollection<Document> collection = database.getCollection("schedule");
+
+		String databaseName = "";
+		List<Document> employees = (List<Document>) collection.find(eq("matchId", matchId))
+				.into(new ArrayList<Document>());
+
+		// Cursor cursor = collection.find(query);
+		Date matchDate = null;
+
+		for (Document emp : employees) {
+
+			matchDate = (Date) emp.get("matchTime");
+			;
+			System.out.println(matchDate.getTime());
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(matchDate);
+
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH) + 1;
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+
+			System.out.println(year);
+			System.out.println(month);
+			System.out.println(day);
+
+			databaseName = "tweets-" + year + "-" + month + "-" + day;
+
+			System.out.println("tweets-" + year + "-" + month + "-" + day);
+
+		}
+
+		// int homePositiveCount = 0; //array element1
+		// int homeNegativeCount = 0;//array element2
+		// int homeNeutralCount = 0;//array element3
+		// int homeTotalCount = 0;//array element4
+		// int awayPositiveCount = 0;//array element5
+		// int awayNegativeCount = 0;//array element6
+		// int awayNeutralCount = 0;//array element7
+		// int awayTotalCount = 0;//array element8
+		// int color = 0;//array element9
+
+		MongoCollection<Document> collection2 = database.getCollection("tweets-2018-4-18");
+		List<Document> filteredTweets = (List<Document>) collection2.find(eq("matchId", Integer.toString(matchId)))
+				.into(new ArrayList<Document>());
 
 		Map<String, int[]> countrySentiment = new HashMap<String, int[]>();
 
-		for (Document emp : employees) {
-			i++;
+		for (Document tweet : filteredTweets) {
 
-			Document location = (Document) emp.get("place");
-
-			// sentiment
-			String sentiment = emp.getString("mySentiment");
+			Document location = (Document) tweet.get("place");
 
 			if (location != null) {
 
-				System.out.println("country = " + location.getString("country"));
-				System.out.println("country code = " + location.getString("country_code"));
+				String country = location.getString("country");
+				String country_code = location.getString("country_code");
 
-				x++;
+				if (countrySentiment.containsKey(country + "_" + country_code)) {
 
-				if (countrySentiment
-						.containsKey(location.getString("country") + "_" + location.getString("country_code"))) {
-					int savedSentiment[] = new int[3];
-					savedSentiment = countrySentiment
-							.get(location.getString("country") + "_" + location.getString("country_code"));
+					int savedSentiment[] = new int[9];
 
-					if (sentiment.equalsIgnoreCase("positive"))
-						savedSentiment[0] = savedSentiment[0] + 1;
-					if (sentiment.equalsIgnoreCase("negative"))
-						savedSentiment[1] = savedSentiment[1] + 1;
-					if (sentiment.equalsIgnoreCase("neutral"))
-						savedSentiment[2] = savedSentiment[2] + 1;
+					savedSentiment = countrySentiment.get(country + "_" + country_code);
 
-					countrySentiment.put(location.getString("country") + "_" + location.getString("country_code"),
-							savedSentiment);
+					if (tweet.getString("teamId").equals(Integer.toString(homeTeamId))) {
 
-				} else {
-					int totalSentiments[] = { 0, 0, 0 };
+						if ("positive".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[0]++;
+						} else if ("negative".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[1]++;
+						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[2]++;
+						}
+						savedSentiment[3] = savedSentiment[0] + savedSentiment[1] + savedSentiment[2];
+					}
 
-					if (sentiment.equalsIgnoreCase("positive"))
-						totalSentiments[0] = 1;
-					if (sentiment.equalsIgnoreCase("negative"))
-						totalSentiments[1] = 1;
-					if (sentiment.equalsIgnoreCase("neutral"))
-						totalSentiments[2] = 1;
+					else if (tweet.getString("teamId").equals(Integer.toString(awayTeamId))) {
+						if ("positive".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[4]++;
+						} else if ("negative".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[5]++;
+						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[6]++;
+						}
+						savedSentiment[7] = savedSentiment[8] + savedSentiment[9] + savedSentiment[10];
+						if (savedSentiment[3] > savedSentiment[7]) {
+							savedSentiment[8] = 0;
+						} else {
+							savedSentiment[8] = 1;
+						}
 
-					countrySentiment.put(location.getString("country") + "_" + location.getString("country_code"),
-							totalSentiments);
+					}
+					countrySentiment.put(country + "_" + country_code, savedSentiment);
+
 				}
+
+				else {
+					int savedSentiment[] = new int[9];
+					if (tweet.getString("teamId").equals(Integer.toString(homeTeamId))) {
+
+						if ("positive".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[0]++;
+						} else if ("negative".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[1]++;
+						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[2]++;
+						}
+						savedSentiment[3] = savedSentiment[0] + savedSentiment[1] + savedSentiment[2];
+					} else if (tweet.getString("teamId").equals(Integer.toString(awayTeamId))) {
+						if ("positive".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[4]++;
+						} else if ("negative".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[5]++;
+						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
+							savedSentiment[6]++;
+						}
+						savedSentiment[7] = savedSentiment[4] + savedSentiment[5] + savedSentiment[6];
+						if (savedSentiment[3] > savedSentiment[7]) {
+							savedSentiment[8] = 0;
+						} else {
+							savedSentiment[8] = 1;
+						}
+
+					}
+					countrySentiment.put(country + "_" + country_code, savedSentiment);
+
+				}
+
+			}
+		}
+		// json
+
+		System.out.println("Complete map is" + countrySentiment);
+		for (Map.Entry<String, int[]> country2 : countrySentiment.entrySet()) {
+			int savedSentiment[] = new int[9];
+			savedSentiment = countrySentiment.get(country2.getKey());
+
+			if (!(savedSentiment[3] == 0 && savedSentiment[7] == 0)) {
+
+				jsonObject = new JSONObject();
+				String countryCode = country2.getKey();
+
+				String[] values = countryCode.split("_");
+				jsonObject.put("name", values[0]);
+				jsonObject.put("id", values[1]);
+
+				jsonObject.put("homePositiveCount", savedSentiment[0]);
+				jsonObject.put("homeNegativeCount", savedSentiment[1]);
+				jsonObject.put("homeNeutralCount", savedSentiment[2]);
+				jsonObject.put("homeTotalCount", savedSentiment[3]);
+				jsonObject.put("awayPositiveCount", savedSentiment[4]);
+				jsonObject.put("awayNegativeCount", savedSentiment[5]);
+				jsonObject.put("awayNeutralCount", savedSentiment[6]);
+				jsonObject.put("awayTotalCount", savedSentiment[7]);
+				jsonObject.put("color", savedSentiment[8]);
+
+				jsonArray.put(jsonObject);
 			}
 		}
 
-		for (Map.Entry<String, int[]> country : countrySentiment.entrySet()) {
-			int savedSentiment[] = new int[3];
-			savedSentiment = countrySentiment.get(country.getKey());
+		System.out.println("Updated json is" + jsonArray);
 
-			jsonObject = new JSONObject();
-			String countryCode = country.getKey();
-			String[] values = countryCode.split("_");
-
-			jsonObject.put("name", values[0]);
-			jsonObject.put("id", values[1]);
-			// positive
-			jsonObject.put("area", savedSentiment[0]);
-			// negative
-			jsonObject.put("density", savedSentiment[1]);
-			// neutral
-			jsonObject.put("population", savedSentiment[2]);
-
-			jsonArray.put(jsonObject);
-		}
-
-		System.out.println(jsonArray);
-
-		System.out.println("Total number of tweets:" + i);
-		System.out.println("Geo enabled tweets:" + x);
-		System.out.println(jsonArray);
 		FileWriter fileWriter = new FileWriter(
-				"C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\Geodata_" + matchId +".json");
-		
+				"C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\UpdatedGeodata_"
+						+ matchId + ".json");
+
 		// Writting the jsonObject into sample.json
 		fileWriter.write(jsonArray.toString());
 		fileWriter.close();
