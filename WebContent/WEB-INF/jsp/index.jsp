@@ -254,8 +254,8 @@ function openCity(cityName) {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h4 class="card-title mb-0">Worldwide Tweets</h4>
-                                <div class="small text-muted">Based on sentiments</div>
+                              <!--   <h4 class="card-title mb-0">Worldwide Sentiments</h4>
+                                <div class="small text-muted">Based on sentiments</div>   -->
                             </div>
                             <!--/.col-->
                            

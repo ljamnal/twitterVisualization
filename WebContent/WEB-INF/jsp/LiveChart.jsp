@@ -262,7 +262,7 @@ div.desc {
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Champions League Dashboard</h1>
+                       <h1><b>Champions League Dashboard</b></h1>
                          
                     </div>
                 </div>
@@ -316,8 +316,8 @@ div.desc {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-4">
-                                <h4 class="card-title mb-0">Worldwide Tweets</h4>
-                                <div class="small text-muted">Based on sentiments</div>
+                               <!--   <h4 class="card-title mb-0">Worldwide Tweets</h4>
+                                <div class="small text-muted">Based on sentiments</div>-->
                             </div>
                             <!--/.col-->
                            
@@ -360,7 +360,7 @@ anychart.onDocumentReady(function() {
     series.labels(false);
 
     series.hovered()
-      .fill('#f48fb1')
+      .fill('#663300')
       .stroke(anychart.color.darken('#f48fb1'));
 
     series.selected()
@@ -370,9 +370,7 @@ anychart.onDocumentReady(function() {
     series.tooltip()
       .useHtml(true)
       .format(function() {
-        return '<span style="color: #d9d9d9">Color</span>: ' +
-          parseFloat(this.value).toLocaleString() + ' tweets <br/><br>' +
-          '<span style="color: #d9d9d9"><b>Home Team</b></span>: ' +
+        return '<span style="color: #d9d9d9"><b>Home Team</b></span>: ' +
           parseInt(this.getData('homeTotalCount')).toLocaleString() + ' tweets <br/>' +
           '<span style="color: #d9d9d9">Positive</span>: ' +
           parseInt(this.getData('homePositiveCount')).toLocaleString() +
@@ -397,7 +395,7 @@ anychart.onDocumentReady(function() {
         greater: 0.5
       }
     ]);
-    scale.colors(['#81d4fa', '#000000']);
+    scale.colors(['#ff9933', '#339966']);
 
     var colorRange = map.colorRange();
     colorRange.enabled(true)
@@ -418,9 +416,9 @@ anychart.onDocumentReady(function() {
         if (isFinite(range.start + range.end)) {
           name = range.start + ' - ' + range.end;
         } else if (isFinite(range.start)) {
-        	 name = 'Away Team ';
+        	 name = '${awayTeam} ';
         } else {
-          name = 'Home team ';
+          name = '${homeTeam} ';
         }
         return name
       });
