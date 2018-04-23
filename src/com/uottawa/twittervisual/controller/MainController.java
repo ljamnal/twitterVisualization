@@ -43,7 +43,6 @@ public class MainController {
 	public String homePage(ModelMap model, HttpServletRequest request) throws ServletException, IOException {
 		DbGeoMap dbGeo = new DbGeoMap();
 		dbGeo.geoMap();
-
 		dbGeo.TeamTweetCount();
 
 
