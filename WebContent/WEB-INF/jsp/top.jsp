@@ -181,7 +181,7 @@ var svg = d3.select("body").append("svg")
 d3.json("<c:url value="/resources/data/updated_flare.json"/>", function(error, root) {
 	
   if (error) throw error;
-
+  
   svg.selectAll("path")
       .data(partition.nodes(root))
     .enter().append("path")
@@ -204,6 +204,8 @@ function click(d) {
     .selectAll("path")
       .attrTween("d", function(d) { return function() { return arc(d); }; });
 }
+
+
 
 d3.select(self.frameElement).style("height", height + "px");
 </script>

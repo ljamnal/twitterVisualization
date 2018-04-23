@@ -19,8 +19,7 @@
   
     <style type="text/css">
     
-  
-  
+    
     #container {
     height: 500px; 
     min-width: 310px; 
@@ -34,10 +33,12 @@
 }
     
      div.gallery {
-    margin: 5px;
+     
+    margin: 8px;
     border: 1px solid #ccc;
     float: left;
-    width: 180px;
+    width: 255px;
+    height: 390px;
 }
 
 
@@ -47,11 +48,20 @@ div.gallery:hover {
 
 div.gallery img {
     width: 100%;
-    height: auto;
+    height: 250px;
 }
 
+
 div.desc {
-    padding: 15px;
+font-size:16px;
+font-weight: bold;
+    padding: 2px;
+    text-align: center;
+    
+}
+div.desc2 {
+font-size:12px;
+    padding: 2px;
     text-align: center;
 }
     </style>
@@ -136,13 +146,13 @@ div.desc {
 
     <div id="right-panel" class="right-panel">
 
-      
 
         <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Champions League Dashboard</h1>
+                    
+                        <h1><b>Champions League Dashboard</b></h1>
                          
                     </div>
                 </div>
@@ -153,7 +163,6 @@ div.desc {
                 </div>
             </div>
         </div>
-
 
 
 <div class="content mt-3">
@@ -189,16 +198,21 @@ function openCity(cityName) {
 <div id="quarter" class="w3-container w3-display-container city">
 
                 <c:forEach var="fixture" items="${quarters}">
+                
                   <div class="gallery">
                     <a href=
                       "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
-                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      src="<c:url value="/resources/data/images_teams/${fixture.matchId}.jpg"/>"
                       height="600" width="600" />
                     </a>
-                    <div class="desc">${fixture.teams}</div>
-                    <div class="desc">${fixture.matchTime}</div>
-                    <div class="desc">${fixture.stadium}</div>
+                    
+                    
+                    <div class="desc">${fixture.homeTeamName}</div>
+                    <div class="desc">vs</div>
+                    <div class="desc">${fixture.awayTeamName}</div>
+                    <div class="desc2">${fixture.matchTime}</div>
+                    <div class="desc2">${fixture.stadium}</div>
                   </div>
                 </c:forEach>
 
@@ -212,7 +226,7 @@ function openCity(cityName) {
                     <a href=
                       "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
-                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      src="<c:url value="/resources/data/images_teams/sevilla.jpg"/>"
                       height="600" width="600" />
                     </a>
                     <div class="desc">${fixture.teams}</div>
@@ -404,18 +418,10 @@ anychart.onDocumentReady(function() {
             </div>
 
 
-
-
-
-
         </div> <!-- .content -->
     </div><!-- /#right-panel -->
 
 
-
-
-
-   
     <!-- Right Panel -->
 
     <script src="resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -449,8 +455,6 @@ anychart.onDocumentReady(function() {
             } );
         } )( jQuery );
     </script>
-    
-   
 
 </body>
 </html>
