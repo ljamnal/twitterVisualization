@@ -226,12 +226,14 @@ function openCity(cityName) {
                     <a href=
                       "fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
-                      src="<c:url value="/resources/data/images_teams/sevilla.jpg"/>"
+                      src="<c:url value="/resources/data/images_teams/${fixture.matchId}.jpg"/>"
                       height="600" width="600" />
                     </a>
-                    <div class="desc">${fixture.teams}</div>
-                    <div class="desc">${fixture.matchTime}</div>
-                    <div class="desc">${fixture.stadium}</div>
+                    <div class="desc">${fixture.homeTeamName}</div>
+                    <div class="desc">vs</div>
+                    <div class="desc">${fixture.awayTeamName}</div>
+                    <div class="desc2">${fixture.matchTime}</div>
+                    <div class="desc2">${fixture.stadium}</div>
                   </div>
                 </c:forEach>
               </div>
@@ -245,12 +247,14 @@ function openCity(cityName) {
                     <a
                       href="fetch?matchId=${fixture.matchId}&homeTeamId=${fixture.homeTeamId}&awayTeamId=${fixture.awayTeamId}&homeTeam=${fixture.homeTeamName}&awayTeam=${fixture.awayTeamName}">
                       <img
-                      src="<c:url value="/resources/img/team/england_2013_winner.jpg"/>"
+                      src="<c:url value="/resources/data/images_teams/${fixture.matchId}.jpg"/>"
                       height="600" width="600" />
                     </a>
-                    <div class="desc">${fixture.teams}</div>
-                    <div class="desc">${fixture.matchTime}</div>
-                    <div class="desc">${fixture.stadium}</div>
+                    <div class="desc">${fixture.homeTeamName}</div>
+                    <div class="desc">vs</div>
+                    <div class="desc">${fixture.awayTeamName}</div>
+                    <div class="desc2">${fixture.matchTime}</div>
+                    <div class="desc2">${fixture.stadium}</div>
                   </div>
                 </c:forEach>
               </div>
