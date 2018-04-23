@@ -298,7 +298,7 @@ anychart.onDocumentReady(function() {
     series.labels(false);
 
     series.hovered()
-      .fill('#f48fb1')
+      .fill('#663300')
       .stroke(anychart.color.darken('#f48fb1'));
 
     series.selected()
