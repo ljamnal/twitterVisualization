@@ -453,13 +453,13 @@ anychart.onDocumentReady(function() {
 
 
         </div> <!-- .content -->
-
+<center>
 <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
 
-
-<svg width="960" height="500"></svg>
+<h3>Tweets comparison</h3><br>
+<svg width="300" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
@@ -478,7 +478,7 @@ var y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
 var z = d3.scaleOrdinal()
-    .range(["#ff8c00", "#6b486b", "#8a89a6"]);
+    .range(["#ff8c00", "#339966"]);
 
 d3.csv("resources/data/TweetsSummaryMatch.csv", function(d, i, columns) {
   for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
@@ -522,7 +522,7 @@ d3.csv("resources/data/TweetsSummaryMatch.csv", function(d, i, columns) {
       .attr("fill", "#000")
       .attr("font-weight", "bold")
       .attr("text-anchor", "start")
-      .text("Population");
+      .text("Count");
 
   var legend = g.append("g")
       .attr("font-family", "sans-serif")
@@ -549,6 +549,8 @@ d3.csv("resources/data/TweetsSummaryMatch.csv", function(d, i, columns) {
 </script>
 
 </div></div></div> 
+
+</center>
 
 </div>	<!--set margin -->
 
