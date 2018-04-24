@@ -370,7 +370,7 @@ anychart.onDocumentReady(function() {
     series.tooltip()
       .useHtml(true)
       .format(function() {
-        return '<span style="color: #d9d9d9"><b>Home Team</b></span>: ' +
+        return '<span style="color: #d9d9d9"><b>${homeTeam}</b></span>: ' +
           parseInt(this.getData('homeTotalCount')).toLocaleString() + ' tweets <br/>' +
           '<span style="color: #d9d9d9">Positive</span>: ' +
           parseInt(this.getData('homePositiveCount')).toLocaleString() +
@@ -378,7 +378,7 @@ anychart.onDocumentReady(function() {
           parseInt(this.getData('homeNegativeCount')).toLocaleString()+
           '<span style="color: #d9d9d9">, Neutral</span>: ' +
           parseInt(this.getData('homeNeutralCount')).toLocaleString()+ ' <br><br>'+
-          '<span style="color: #d9d9d9"><b>Away Team</b></span>: ' +
+          '<span style="color: #d9d9d9"><b>${awayTeam}</b></span>: ' +
           parseInt(this.getData('awayTotalCount')).toLocaleString() + ' tweets <br/>'+
           '<span style="color: #d9d9d9">Positive</span>: ' +
           parseInt(this.getData('awayPositiveCount')).toLocaleString()+

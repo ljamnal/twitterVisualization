@@ -125,7 +125,7 @@ public class MatchGeo {
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[6]++;
 						}
-						savedSentiment[7] = savedSentiment[8] + savedSentiment[9] + savedSentiment[10];
+						savedSentiment[7] = savedSentiment[4] + savedSentiment[5] + savedSentiment[6];
 						if (savedSentiment[3] > savedSentiment[7]) {
 							savedSentiment[8] = 0;
 						} else {
