@@ -27,6 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import java.io.FileWriter;
+import java.util.Arrays;
+
 @Component
 public class MatchGeo {
 	private static final long serialVersionUID = 1L;
@@ -211,6 +214,69 @@ public class MatchGeo {
 		fileWriter.write(jsonArray.toString());
 		fileWriter.close();
 		System.out.println("JSON Object Successfully written to the file!!");
+		
 
-	}
+
+		//writing to csv File for Stacked Bar Graph
+		//writing to file
+		        String csvFile = "C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\TweetsSummaryMatch.csv";
+		        FileWriter writer = new FileWriter(csvFile);
+
+				// Delimiter used in CSV file
+						final String COMMA_DELIMITER = ",";
+						final String NEW_LINE_SEPARATOR = "\n";
+						// CSV file header
+						
+						//final String FILE_HEADER = "State,Team 1 ,Team2";
+						//writer.append(FILE_HEADER.toString());
+						writer.append("State,"+homeTeamName+","+awayTeamName);
+						
+				// Add a new line separator after the header
+						writer.append(NEW_LINE_SEPARATOR);
+						
+				// Write a new object list to the CSV file
+						
+						int totalHomePositive = 0;
+						int totalAwayPositive = 0;
+						int totalHomeNegative = 0;
+						int totalAwayNegative = 0;
+						int totalHomeNeutral = 0;
+						int totalAwayNeutral = 0;
+						
+						for (int i = 0; i < jsonArray.length(); i++) { 
+							
+						jsonObject=jsonArray.getJSONObject(i);
+						totalHomePositive = totalHomePositive + (int) jsonObject.get("homePositiveCount");
+						totalHomeNegative = totalHomeNegative + (int) jsonObject.get("homeNegativeCount");
+						totalHomeNeutral = totalHomeNeutral + (int) jsonObject.get("homeNeutralCount");
+						totalAwayPositive = totalAwayPositive + (int) jsonObject.get("awayPositiveCount");
+						totalAwayNegative = totalAwayNegative + (int) jsonObject.get("awayNegativeCount");
+						totalAwayNeutral = totalAwayNeutral + (int) jsonObject.get("awayNeutralCount");
+						}
+								
+					writer.append("Positive");
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalHomePositive));
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalAwayPositive));
+					writer.append(NEW_LINE_SEPARATOR);
+					writer.append("Negative");
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalHomeNegative));
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalAwayNegative));
+					writer.append(NEW_LINE_SEPARATOR);
+					writer.append("Neutral");
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalHomeNeutral));
+					writer.append(COMMA_DELIMITER);
+					writer.append(Integer.toString(totalAwayNeutral));
+					writer.append(NEW_LINE_SEPARATOR);
+				
+		        
+		        writer.flush();
+		        writer.close();
+
+		    }
+
 }
