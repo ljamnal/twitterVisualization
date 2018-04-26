@@ -62,6 +62,7 @@ div.desc {
     padding: 15px;
     text-align: center;
 }
+
     </style>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
@@ -506,6 +507,7 @@ d3.csv("resources/data/TweetsSummaryMatch.csv", function(d, i, columns) {
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
       .attr("width", x.bandwidth());
+  
 
   g.append("g")
       .attr("class", "axis")
@@ -538,6 +540,7 @@ d3.csv("resources/data/TweetsSummaryMatch.csv", function(d, i, columns) {
       .attr("width", 19)
       .attr("height", 19)
       .attr("fill", z);
+ 
 
   legend.append("text")
       .attr("x", width - 24)

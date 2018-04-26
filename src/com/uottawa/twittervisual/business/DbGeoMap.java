@@ -8,10 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -90,6 +91,7 @@ public class DbGeoMap {
 
 				x++;
 
+				if(sentiment!=null) {
 				if (countrySentiment
 						.containsKey(location.getString("country") + "_" + location.getString("country_code"))) {
 					int savedSentiment[] = new int[3];
@@ -120,7 +122,8 @@ public class DbGeoMap {
 							totalSentiments);
 				}
 
-			}
+				}
+				}
 
 		}
 
@@ -276,7 +279,11 @@ public class DbGeoMap {
 
 		List<Tweets> rootChildren = new ArrayList<>();
 
-		for (Map.Entry<String, int[]> country : countrySentiment.entrySet()) {
+		
+		Map<String, int[]> treeMap = new TreeMap<String, int[]>(countrySentiment);
+		
+		for (Map.Entry<String, int[]> country : treeMap.entrySet()) {
+
 			int teamId = Integer.parseInt(country.getKey());
 			int savedSentiment[] = new int[3];
 			savedSentiment = countrySentiment.get(country.getKey());
@@ -334,7 +341,7 @@ public class DbGeoMap {
 		String json = mapper.writeValueAsString(root);
 
 		FileWriter fileWriter = new FileWriter(
-				"C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\updated_flare.json");
+				"C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\updated_flare.json");
 		// Writting the jsonObject into sample.json
 		fileWriter.write(json);
 		fileWriter.close();

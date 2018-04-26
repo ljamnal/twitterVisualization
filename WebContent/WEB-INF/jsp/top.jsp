@@ -28,6 +28,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
+    
+    .my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+    }
+  .my-legend .legend-scale ul {
+    margin: 10;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .my-legend .legend-scale ul li {
+    display: block;
+    float: left;
+    width: 50px;
+    margin-bottom: 6px;
+     margin-left: 60px;
+    text-align: center;
+    font-size: 65%;
+    list-style: none;
+    }
+  .my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 50px;
+    }
+  .my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    }
+  .my-legend a {
+    color: #777;
+    }
+    
+    
+    
+    
+    
+    
 path {
   stroke: #fff;
 }
@@ -99,33 +142,37 @@ div.desc {
                    
                     <li class="menu-item-has-children dropdown">
                         <a href="<c:url value="topClubs.html"/>" class="dropdown-toggle" > <i class="menu-icon fa fa-table"></i>Tweets (Team-wise)</a>
-                       
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside><!-- /#left-panel -->
 
-
-
-
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+        
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h3>Trending team</h3>
+                        <h3></h3>
                          
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                   
-                </div>
-            </div>
-        </div>
+                    
 
 <script src="<c:url value="http://d3js.org/d3.v3.min.js"/>"></script>
+
+<div class='my-legend'>
+<div class='legend-title'></div>
+<div class='legend-scale'>
+  <ul class='legend-labels'>
+    <li><span style='background:#FD8C3E;'></span>Liverpool</li>
+    <li><span style='background:#FCD0A2;'></span>Barcelona</li>
+    <li><span style='background:#9DCAE1;'></span>Real Madrid</li>
+    <li><span style='background:#E5550E;'></span>Manchester City</li>
+    <li><span style='background:#C6DBF0;'></span>Juventus</li>
+    <li><span style='background:#F8B16A;'></span>Roma</li>
+    <li><span style='background:#33A351;'></span>Bayern</li>
+    <li><span style='background:#6FAEDA;'></span>Sevilla</li>
+  </ul>
+</div>
+</div>
 
 
 <script>
@@ -160,9 +207,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
 d3.json("<c:url value="/resources/data/updated_flare.json"/>", function(error, root) {
-	
   if (error) throw error;
-  
   svg.selectAll("path")
       .data(partition.nodes(root))
     .enter().append("path")
@@ -170,7 +215,8 @@ d3.json("<c:url value="/resources/data/updated_flare.json"/>", function(error, r
       .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
       .on("click", click)
     .append("title")
-      .text(function(d) { return d.name + "\n" + formatNumber(d.value); });
+      .text(function(d) { return d.name + "\n" + formatNumber(d.value); });  
+ 
 });
 
 function click(d) {
@@ -184,13 +230,14 @@ function click(d) {
       })
     .selectAll("path")
       .attrTween("d", function(d) { return function() { return arc(d); }; });
+
 }
-
-
-
 d3.select(self.frameElement).style("height", height + "px");
 </script>
 
+</div>
+                </div>
+            </div>
 
 </body>
 </html>

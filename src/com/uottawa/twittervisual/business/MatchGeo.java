@@ -207,7 +207,8 @@ public class MatchGeo {
 		System.out.println("Updated json is" + jsonArray);
 
 		FileWriter fileWriter = new FileWriter(
-				"C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\UpdatedGeodata_"
+				
+				"C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\UpdatedGeodata_"
 						+ matchId + ".json");
 
 		// Writting the jsonObject into sample.json
@@ -219,7 +220,8 @@ public class MatchGeo {
 
 		//writing to csv File for Stacked Bar Graph
 		//writing to file
-		        String csvFile = "C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\TweetsSummaryMatch.csv";
+		       String csvFile = "C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\TweetsSummaryMatch.csv";
+        
 		        FileWriter writer = new FileWriter(csvFile);
 
 				// Delimiter used in CSV file
