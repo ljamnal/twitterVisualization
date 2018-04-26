@@ -17,6 +17,7 @@ import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.uottawa.twittervisual.model.ConnectionFactory;
 import com.uottawa.twittervisual.model.Tweets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClient;
@@ -33,7 +34,7 @@ public class DbGeoMap {
 	public void geoMap() throws ServletException, IOException {
 
 		// Creating a Mongo client
-		MongoClient mongo = new MongoClient("localhost", 27017);
+		MongoClient mongo = ConnectionFactory.CONNECTION.getClient();
 
 		// Creating Credentials
 		MongoCredential credential;
@@ -210,7 +211,7 @@ public class DbGeoMap {
 	public void TeamTweetCount() throws ServletException, IOException {
 
 		System.out.println("Graph 2 started");
-		MongoClient mongo = new MongoClient("localhost", 27017);
+		MongoClient mongo = ConnectionFactory.CONNECTION.getClient();
 		MongoCredential credential;
 		credential = MongoCredential.createCredential("sampleUser", "local", "password".toCharArray());
 		System.out.println("Checking connection");

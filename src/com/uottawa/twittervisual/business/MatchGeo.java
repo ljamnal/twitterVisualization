@@ -13,7 +13,9 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.ne;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -29,6 +31,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.util.Arrays;
+import com.mongodb.MongoClient;
+import com.uottawa.twittervisual.model.ConnectionFactory;
 
 @Component
 public class MatchGeo {
@@ -41,7 +45,7 @@ public class MatchGeo {
 
 		JSONObject jsonObject = null;
 		JSONArray jsonArray = new JSONArray();
-		MongoClient mongo = new MongoClient("localhost", 27017);
+		MongoClient mongo = ConnectionFactory.CONNECTION.getClient();
 		MongoDatabase database = mongo.getDatabase("cdpTweets");
 
 		// Retrieving a collection
@@ -87,10 +91,13 @@ public class MatchGeo {
 		// int awayTotalCount = 0;//array element8
 		// int color = 0;//array element9
 
-		MongoCollection<Document> collection2 = database.getCollection("tweets-2018-4-18");
-		List<Document> filteredTweets = (List<Document>) collection2.find(eq("matchId", Integer.toString(matchId)))
-				.into(new ArrayList<Document>());
-
+		MongoCollection<Document> collection2 = database.getCollection(databaseName);
+		System.out.println("geo query start");
+		System.out.println(new Date());
+		List<Document> filteredTweets = (List<Document>) collection2
+				.find(and(eq("matchId", Integer.toString(matchId)), ne("place", null))).into(new ArrayList<Document>());
+		System.out.println("geo query end");
+		System.out.println(new Date());
 		Map<String, int[]> countrySentiment = new HashMap<String, int[]>();
 
 		for (Document tweet : filteredTweets) {
@@ -108,7 +115,7 @@ public class MatchGeo {
 
 					savedSentiment = countrySentiment.get(country + "_" + country_code);
 
-					if (tweet.getString("teamId").equals(Integer.toString(homeTeamId))) {
+					if (Integer.toString(homeTeamId).equals(tweet.getString("teamId"))) {
 
 						if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[0]++;
@@ -117,10 +124,9 @@ public class MatchGeo {
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[2]++;
 						}
-						savedSentiment[3] = savedSentiment[0] + savedSentiment[1] + savedSentiment[2];
 					}
 
-					else if (tweet.getString("teamId").equals(Integer.toString(awayTeamId))) {
+					else if (Integer.toString(awayTeamId).equals(tweet.getString("teamId"))) {
 						if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[4]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
@@ -128,12 +134,7 @@ public class MatchGeo {
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[6]++;
 						}
-						savedSentiment[7] = savedSentiment[4] + savedSentiment[5] + savedSentiment[6];
-						if (savedSentiment[3] > savedSentiment[7]) {
-							savedSentiment[8] = 0;
-						} else {
-							savedSentiment[8] = 1;
-						}
+	
 
 					}
 					countrySentiment.put(country + "_" + country_code, savedSentiment);
@@ -142,7 +143,7 @@ public class MatchGeo {
 
 				else {
 					int savedSentiment[] = new int[9];
-					if (tweet.getString("teamId").equals(Integer.toString(homeTeamId))) {
+					if (Integer.toString(homeTeamId).equals(tweet.getString("teamId"))) {
 
 						if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[0]++;
@@ -151,20 +152,13 @@ public class MatchGeo {
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[2]++;
 						}
-						savedSentiment[3] = savedSentiment[0] + savedSentiment[1] + savedSentiment[2];
-					} else if (tweet.getString("teamId").equals(Integer.toString(awayTeamId))) {
+					} else if (Integer.toString(awayTeamId).equals(tweet.getString("teamId"))) {
 						if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[4]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[5]++;
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[6]++;
-						}
-						savedSentiment[7] = savedSentiment[4] + savedSentiment[5] + savedSentiment[6];
-						if (savedSentiment[3] > savedSentiment[7]) {
-							savedSentiment[8] = 0;
-						} else {
-							savedSentiment[8] = 1;
 						}
 
 					}
@@ -181,26 +175,39 @@ public class MatchGeo {
 			int savedSentiment[] = new int[9];
 			savedSentiment = countrySentiment.get(country2.getKey());
 
+			savedSentiment[3] = savedSentiment[0] + savedSentiment[1] + savedSentiment[2];
+			savedSentiment[7] = savedSentiment[4] + savedSentiment[5] + savedSentiment[6];
+
 			if (!(savedSentiment[3] == 0 && savedSentiment[7] == 0)) {
 
 				jsonObject = new JSONObject();
 				String countryCode = country2.getKey();
 
 				String[] values = countryCode.split("_");
-				jsonObject.put("name", values[0]);
-				jsonObject.put("id", values[1]);
+				if (values.length != 0) {
 
-				jsonObject.put("homePositiveCount", savedSentiment[0]);
-				jsonObject.put("homeNegativeCount", savedSentiment[1]);
-				jsonObject.put("homeNeutralCount", savedSentiment[2]);
-				jsonObject.put("homeTotalCount", savedSentiment[3]);
-				jsonObject.put("awayPositiveCount", savedSentiment[4]);
-				jsonObject.put("awayNegativeCount", savedSentiment[5]);
-				jsonObject.put("awayNeutralCount", savedSentiment[6]);
-				jsonObject.put("awayTotalCount", savedSentiment[7]);
-				jsonObject.put("color", savedSentiment[8]);
+					if (savedSentiment[3] > savedSentiment[7]) {
+						savedSentiment[8] = 0;
+					} else {
+						savedSentiment[8] = 1;
+					}
 
-				jsonArray.put(jsonObject);
+					jsonObject.put("name", values[0]);
+					jsonObject.put("id", values[1]);
+
+					jsonObject.put("homePositiveCount", savedSentiment[0]);
+					jsonObject.put("homeNegativeCount", savedSentiment[1]);
+					jsonObject.put("homeNeutralCount", savedSentiment[2]);
+					jsonObject.put("homeTotalCount", savedSentiment[3]);
+					jsonObject.put("awayPositiveCount", savedSentiment[4]);
+					jsonObject.put("awayNegativeCount", savedSentiment[5]);
+					jsonObject.put("awayNeutralCount", savedSentiment[6]);
+					jsonObject.put("awayTotalCount", savedSentiment[4] + savedSentiment[5] + savedSentiment[6]);
+					jsonObject.put("color", savedSentiment[8]);
+
+					jsonArray.put(jsonObject);
+				}
+
 			}
 		}
 

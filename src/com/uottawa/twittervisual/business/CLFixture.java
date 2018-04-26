@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.uottawa.twittervisual.model.ConnectionFactory;
 import com.uottawa.twittervisual.model.FixtureDetail;
 
 @Component
@@ -26,7 +27,7 @@ public class CLFixture {
 		List<FixtureDetail> semiFinal = new ArrayList<>();
 		List<FixtureDetail> finals = new ArrayList<>();
 
-		MongoClient mongo = new MongoClient("localhost", 27017);
+		MongoClient mongo = ConnectionFactory.CONNECTION.getClient();
 		MongoDatabase database = mongo.getDatabase("cdpTweets");
 
 		// Retrieving a collection
@@ -84,7 +85,7 @@ public class CLFixture {
 		fixtureList.put("quarterfinal", quarterFinal);
 		fixtureList.put("final", finals);
 
-		mongo.close();
+		//mongo.close();
 		return fixtureList;
 	}
 }
