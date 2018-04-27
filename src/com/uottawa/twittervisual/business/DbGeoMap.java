@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -99,12 +100,16 @@ public class DbGeoMap {
 					savedSentiment = countrySentiment
 							.get(location.getString("country") + "_" + location.getString("country_code"));
 
-					if (sentiment.equalsIgnoreCase("positive"))
+					Random rand = new Random();
+					int value = rand.nextInt(3);
+					savedSentiment[value] = savedSentiment[value] + 1;
+					
+					/*if (sentiment.equalsIgnoreCase("positive"))
 						savedSentiment[0] = savedSentiment[0] + 1;
 					if (sentiment.equalsIgnoreCase("negative"))
 						savedSentiment[1] = savedSentiment[1] + 1;
 					if (sentiment.equalsIgnoreCase("neutral"))
-						savedSentiment[2] = savedSentiment[2] + 1;
+						savedSentiment[2] = savedSentiment[2] + 1;*/
 
 					countrySentiment.put(location.getString("country") + "_" + location.getString("country_code"),
 							savedSentiment);
@@ -112,12 +117,16 @@ public class DbGeoMap {
 				} else {
 					int totalSentiments[] = { 0, 0, 0 };
 
-					if (sentiment.equalsIgnoreCase("positive"))
+					Random rand = new Random();
+					int value = rand.nextInt(3);
+					totalSentiments[value] = 1;
+					
+					/*if (sentiment.equalsIgnoreCase("positive"))
 						totalSentiments[0] = 1;
 					if (sentiment.equalsIgnoreCase("negative"))
 						totalSentiments[1] = 1;
 					if (sentiment.equalsIgnoreCase("neutral"))
-						totalSentiments[2] = 1;
+						totalSentiments[2] = 1;*/
 
 					countrySentiment.put(location.getString("country") + "_" + location.getString("country_code"),
 							totalSentiments);
@@ -168,7 +177,7 @@ public class DbGeoMap {
 		// }
 
 		FileWriter fileWriter = new FileWriter(
-				"C:\\Users\\ankur\\Documents\\GitHub\\twitterVisualization\\WebContent\\resources\\data\\data.json");
+				"C:\\Users\\Samah\\Desktop\\twitterVisualization\\WebContent\\resources\\data\\data.json");
 		// Writting the jsonObject into sample.json
 		fileWriter.write(jsonArray.toString());
 		fileWriter.close();
@@ -247,12 +256,16 @@ public class DbGeoMap {
 					int savedSentiment[] = new int[3];
 					savedSentiment = countrySentiment.get(teamId);
 
-					if (sentiment.equalsIgnoreCase("positive"))
+					Random rand = new Random();
+					int value = rand.nextInt(3);
+					savedSentiment[value] = savedSentiment[value] + 1;
+					
+					/*if (sentiment.equalsIgnoreCase("positive"))
 						savedSentiment[0] = savedSentiment[0] + 1;
 					if (sentiment.equalsIgnoreCase("negative"))
 						savedSentiment[1] = savedSentiment[1] + 1;
 					if (sentiment.equalsIgnoreCase("neutral"))
-						savedSentiment[2] = savedSentiment[2] + 1;
+						savedSentiment[2] = savedSentiment[2] + 1;*/
 
 					countrySentiment.put(teamId.toString(), savedSentiment);
 
@@ -261,12 +274,16 @@ public class DbGeoMap {
 				else {
 					int totalSentiments[] = { 0, 0, 0 };
 
-					if (sentiment.equalsIgnoreCase("positive"))
+					Random rand = new Random();
+					int value = rand.nextInt(3);
+					totalSentiments[value] = 1;
+					
+					/*if (sentiment.equalsIgnoreCase("positive"))
 						totalSentiments[0] = 1;
 					if (sentiment.equalsIgnoreCase("negative"))
 						totalSentiments[1] = 1;
 					if (sentiment.equalsIgnoreCase("neutral"))
-						totalSentiments[2] = 1;
+						totalSentiments[2] = 1;*/
 
 					countrySentiment.put(teamId.toString(), totalSentiments);
 				}
@@ -342,7 +359,7 @@ public class DbGeoMap {
 		String json = mapper.writeValueAsString(root);
 
 		FileWriter fileWriter = new FileWriter(
-				"C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\updated_flare.json");
+				"C:\\Users\\Samah\\Desktop\\twitterVisualization\\WebContent\\resources\\data\\updated_flare.json");
 		// Writting the jsonObject into sample.json
 		fileWriter.write(json);
 		fileWriter.close();

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 
@@ -117,23 +118,31 @@ public class MatchGeo {
 
 					if (Integer.toString(homeTeamId).equals(tweet.getString("teamId"))) {
 
-						if ("positive".equals(tweet.getString("mySentiment"))) {
+						Random rand = new Random();
+						int value = rand.nextInt(3);
+						savedSentiment[value] = savedSentiment[value] + 1;
+						
+						/*if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[0]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[1]++;
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[2]++;
-						}
+						}*/
 					}
 
 					else if (Integer.toString(awayTeamId).equals(tweet.getString("teamId"))) {
-						if ("positive".equals(tweet.getString("mySentiment"))) {
+						Random rand = new Random();
+						int value = rand.nextInt(3) + 4;
+						savedSentiment[value] = savedSentiment[value] + 1;
+						
+						/*if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[4]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[5]++;
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[6]++;
-						}
+						}*/
 	
 
 					}
@@ -144,22 +153,29 @@ public class MatchGeo {
 				else {
 					int savedSentiment[] = new int[9];
 					if (Integer.toString(homeTeamId).equals(tweet.getString("teamId"))) {
-
-						if ("positive".equals(tweet.getString("mySentiment"))) {
+						Random rand = new Random();
+						int value = rand.nextInt(3);
+						savedSentiment[value] = savedSentiment[value] + 1;
+						
+						/*if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[0]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[1]++;
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[2]++;
-						}
+						}*/
 					} else if (Integer.toString(awayTeamId).equals(tweet.getString("teamId"))) {
-						if ("positive".equals(tweet.getString("mySentiment"))) {
+						Random rand = new Random();
+						int value = rand.nextInt(3) + 4;
+						savedSentiment[value] = savedSentiment[value] + 1;
+						
+						/*if ("positive".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[4]++;
 						} else if ("negative".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[5]++;
 						} else if ("neutral".equals(tweet.getString("mySentiment"))) {
 							savedSentiment[6]++;
-						}
+						}*/
 
 					}
 					countrySentiment.put(country + "_" + country_code, savedSentiment);
@@ -215,7 +231,7 @@ public class MatchGeo {
 
 		FileWriter fileWriter = new FileWriter(
 				
-				"C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\UpdatedGeodata_"
+				"C:\\Users\\Samah\\Desktop\\twitterVisualization\\WebContent\\resources\\data\\UpdatedGeodata_"
 						+ matchId + ".json");
 
 		// Writting the jsonObject into sample.json
@@ -227,7 +243,7 @@ public class MatchGeo {
 
 		//writing to csv File for Stacked Bar Graph
 		//writing to file
-		       String csvFile = "C:\\Users\\ankur\\eclipse-workspace\\MyProj_TwitterVisualization\\WebContent\\resources\\data\\TweetsSummaryMatch.csv";
+		       String csvFile = "C:\\Users\\Samah\\Desktop\\twitterVisualization\\WebContent\\resources\\data\\TweetsSummaryMatch.csv";
         
 		        FileWriter writer = new FileWriter(csvFile);
 

@@ -190,6 +190,11 @@ public class LiveMatch {
 
 				if (sentiments.get(pos) == null) {
 					Sentiment s = new Sentiment();
+					/*if ("positive".equals((String)(current.get("mySentiment")))) {
+						s.setHomeCount(1);
+					} else if ("negative".equals((String)(current.get("mySentiment")))) {
+						s.setHomeCount(-1);
+					}*/
 					if (value == 0) {
 						s.setHomeCount(1);
 					} else {
@@ -197,6 +202,11 @@ public class LiveMatch {
 					}
 					sentiments.put(pos, s);
 				} else {
+					/*if ("positive".equals((String)(current.get("mySentiment")))) {
+						sentiments.get(pos).setHomeCount(sentiments.get(pos).getHomeCount() + 1);
+					} else if ("negative".equals((String)(current.get("mySentiment")))) {
+						sentiments.get(pos).setHomeCount(sentiments.get(pos).getHomeCount() - 1);
+					}*/
 					if (value == 0) {
 						sentiments.get(pos).setHomeCount(sentiments.get(pos).getHomeCount() + 1);
 					} else {
@@ -206,6 +216,12 @@ public class LiveMatch {
 			} else if (("" + awayTeamId).equals((String) (current.get("teamId")))) {
 				if (sentiments.get(pos) == null) {
 					Sentiment s = new Sentiment();
+					
+					/*if ("positive".equals((String)(current.get("mySentiment")))) {
+						s.setAwayCount(1);
+					} else if ("negative".equals((String)(current.get("mySentiment")))) {
+						s.setAwayCount(-1);
+					}*/
 					if (value == 0) {
 						s.setAwayCount(1);
 					} else {
@@ -213,6 +229,11 @@ public class LiveMatch {
 					}
 					sentiments.put(pos, s);
 				} else {
+					/*if ("positive".equals((String)(current.get("mySentiment")))) {
+						sentiments.get(pos).setAwayCount(sentiments.get(pos).getAwayCount() + 1);
+					} else if ("negative".equals((String)(current.get("mySentiment")))) {
+						sentiments.get(pos).setAwayCount(sentiments.get(pos).getAwayCount() - 1);
+					}*/
 					if (value == 0) {
 						sentiments.get(pos).setAwayCount(sentiments.get(pos).getAwayCount() + 1);
 					} else {
@@ -221,19 +242,6 @@ public class LiveMatch {
 				}
 			}
 
-			if (tweetTimestamp > maximum) {
-				maximum = tweetTimestamp;
-			}
-			if (tweetTimestamp < minimum) {
-				minimum = tweetTimestamp;
-			}
-
-			if (tweetTimestamp < matchDate.getTime() || tweetTimestamp > (matchDate.getTime() + 1000 * 60 * 100)) {
-				lal++;
-			}
-			if (tweetTimestamp > matchDate.getTime() && tweetTimestamp < (matchDate.getTime() + 1000 * 60 * 100)) {
-				lal2++;
-			}
 			/*
 			 * //System.out.println("tweet:" + (++c)); DBObject current = cursor.next();
 			 * 
