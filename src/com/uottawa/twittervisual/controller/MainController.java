@@ -61,6 +61,13 @@ public class MainController {
 		return new ModelAndView("top","message","done");
 	}
 	
+	@RequestMapping(value = "/historicalData")
+	public @ResponseBody ModelAndView historicalData(@RequestParam("decadeId") int decadeId, ModelMap model) {
+
+		model.put("decadeId", decadeId);
+		return new ModelAndView("historicalData","message","done");
+	}
+	
 	@RequestMapping(value = "/liveData", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String liveDataRealTime(@RequestParam("time") float time, @RequestParam("matchId") int matchId,
 			@RequestParam("homeTeamId") int homeTeamId, @RequestParam("awayTeamId") int awayTeamId,

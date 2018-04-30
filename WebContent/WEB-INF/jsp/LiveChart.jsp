@@ -246,6 +246,12 @@ div.desc {
                        
                     </li>
                     
+                     </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="<c:url value="historicalData?decadeId=1"/>" class="dropdown-toggle" > <i class="menu-icon fa fa-table"></i>Historical Facts</a>
+                       
+                    </li>
+                    
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
