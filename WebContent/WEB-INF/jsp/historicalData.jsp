@@ -256,7 +256,7 @@ h1 { /* NEW */
             g = svg.append("g").attr("transform", "translate(20,0)");       // move right 20px.
 
     // x-scale and x-axis
-    var experienceName = ["0", "1","2","3","4","5"];
+    var experienceName = ["0","1","2","3","4","5"];
     var formatSkillPoints = function (d) {
         return experienceName[d % 6];
     }
